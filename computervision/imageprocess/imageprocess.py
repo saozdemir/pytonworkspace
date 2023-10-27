@@ -1,46 +1,48 @@
+"""
+#author: saozdemir
+#description: Görüntü İşleme Uygulaması
+
+"""
+
 import tkinter as tk
 from tkinter import filedialog
+
 import cv2
-from PIL import Image, ImageTk
-import numpy as np
 
+form = tk.Tk()
+form.geometry("700x700")
+form.title("Görüntü İşleme")
+"""
+Yüklenen resmin pixellerini yazdıracak metot.
+"""
+def print_image_pixel(image):
+    for i, row in enumerate(image):
+        for j, pixel in enumerate(row):
+            blue, green, red = pixel
+            print(f"pixel({i},{j}) = [{red},{green},{blue}]")
+    print("Done")
+"""
+FileDialog ile resim seçimini alır
+Alınan resmi 300x300px formatına resize eder.
+"""
 def load_image():
-    global original_image
+    try:
+        imagePath = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.gif")])
+        if len(imagePath) != 0:
+            image = cv2.imread(imagePath)
+            image = cv2.resize(image, (300, 300))  # Yüklenen resmi 300x300 olacak şekilde resize et.
+            lblPath.config(text=imagePath)
+            print_image_pixel(image)
+    except Exception as e:
+        lblPath.config(text="Resim yükleme hatası!")
+        print(f"Hata: {e}")
 
-    # Kullanıcıya resim seçme penceresi açılır
-    file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg *.jpeg *.png")])
 
-    if file_path:
-        # Resmi yükle
-        original_image = cv2.imread(file_path)
-        original_image = cv2.resize(original_image, (300, 300))
+btnLoadImage = tk.Button(form, text="Resim Yükle", command=load_image)
+btnLoadImage.grid(row=0, column=0, padx=10, pady=10)
+# btnLoadImage.pack(anchor="nw", padx=5, pady=5)
 
-        # Resmi Tkinter formatına dönüştür
-        original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
-        original_image = Image.fromarray(original_image)
-        original_image = ImageTk.PhotoImage(original_image)
+lblPath = tk.Label(form, text="-")
+lblPath.grid(row=0, column=1, padx=10, pady=10)
 
-        # Resmi göster
-        original_label.config(image=original_image)
-        original_label.image = original_image
-
-# Ana uygulama penceresini oluştur
-root = tk.Tk()
-root.title("Görüntü İşleme Uygulaması")
-
-# Resim yükleme butonunu oluştur
-load_button = tk.Button(root, text="Resim Yükle", command=load_image)
-load_button.pack(pady=10)
-
-# İlk görüntüyü gösteren etiket
-original_label = tk.Label(root)
-original_label.pack()
-
-# İnvert edilmiş görüntüyü gösteren etiket
-processed_label = tk.Label(root)
-processed_label.pack()
-
-# İşlem butonunu oluştur
-
-# Uygulamayı başlat
-root.mainloop()
+tk.mainloop()
