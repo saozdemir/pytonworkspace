@@ -157,7 +157,9 @@ def load_image():
         lblPath.config(text="Resim yükleme hatası!")
         print(f"Hata: {e}")
 
-
+"""
+Component yerleşimeri
+"""
 btnLoadImage = tk.Button(form, text="Resim Yükle", command=load_image)
 btnLoadImage.grid(row=0, column=0, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
 
