@@ -1,4 +1,7 @@
-import GuiImageProcessor as gui
+from ImageProcessor import ImageProcessor
+from GuiImageProcessor import GuiImageProcessor
 
 if __name__ == "__main__":
-    gui = gui.run
+    processor = ImageProcessor()
+    gui = GuiImageProcessor(processor)
+    gui.run()
