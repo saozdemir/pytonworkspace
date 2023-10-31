@@ -1,7 +1,9 @@
 """
-#author: saozdemir
-#description: Görüntü İşleme Uygulaması
-
+ @author Seyit Ahmet ÖZDEMİR
+ @project pytonworkspace ImageProcess
+ @date 28 Eki 2023
+ <p>
+ @description: Görüntü İşleme Uygulaması
 """
 
 import tkinter as tk
@@ -10,7 +12,7 @@ from tkinter import filedialog
 from PIL import Image, ImageTk
 
 form = tk.Tk()
-form.geometry("700x700")
+form.geometry("700x500")
 form.title("Görüntü İşleme")
 
 """
@@ -33,23 +35,45 @@ label = None
 image = None
 photoProc = None
 labelProc = None
+labelDesc = None
 
+"""
+Yüklenen fotoğrafı gösterir
+"""
 def show_image(image):
     global photo, label
     normalImage = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     photo = ImageTk.PhotoImage(image=Image.fromarray(normalImage))
     label = tk.Label(form, image=photo)
-    label.grid(row=2, column=0, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=4)
+    label.grid(row=3, column=0, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=4)
 
+"""
+İşlenmiş fotoğrafı gösterir
+"""
 def show_processed_image(matrix):
     global photoProc, labelProc
     photoProc = ImageTk.PhotoImage(image=Image.fromarray(matrix))
     labelProc = tk.Label(form, image=photoProc)
-    labelProc.grid(row=2, column=4, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=4)
+    labelProc.grid(row=3, column=4, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=4)
+
+
+"""
+Yapılan işlemi yazdırır.
+"""
+
+
+def show_process_description(text):
+    global labelDesc
+    labelDesc = tk.Label(form, text=text)
+    labelDesc.grid(row=2, column=7, padx=5, pady=5, sticky="w", rowspan=1, columnspan=2)
+    pass
+
 
 """
 Yüklenen foroğrafı tersler eder.
 """
+
+
 def invert():
     global photoProc, labelProc
     matrix = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -60,10 +84,14 @@ def invert():
                 matrix[i, j, k] = max(0, 255 - matrix[i, j, k])
 
     show_processed_image(matrix)
+    show_process_description("Invert")
+
 
 """
 Yüklenen fotoğrafı karartır.
 """
+
+
 def darken():
     global photoProc, labelProc
     matrix = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -73,10 +101,14 @@ def darken():
             for k in range(matrix.shape[2]):
                 matrix[i, j, k] = max(0, matrix[i, j, k] - 128)
     show_processed_image(matrix)
+    show_process_description("Darken")
+
 
 """
 Yüklenen fotoğrafı aydınlatır.
 """
+
+
 def lighten():
     global photoProc, labelProc
     matrix = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -86,11 +118,14 @@ def lighten():
             for k in range(matrix.shape[2]):
                 matrix[i, j, k] = min(255, matrix[i, j, k] + 128)
     show_processed_image(matrix)
+    show_process_description("Lighten")
 
 
 """
 Yüklenen fotoğrafın kotrastını düşürür.
 """
+
+
 def lower_cont():
     global photoProc, labelProc
     matrix = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -98,12 +133,16 @@ def lower_cont():
     for i in range(matrix.shape[0]):
         for j in range(matrix.shape[1]):
             for k in range(matrix.shape[2]):
-                matrix[i, j, k] = round(matrix[i, j, k] /2)
+                matrix[i, j, k] = round(matrix[i, j, k] / 2)
     show_processed_image(matrix)
+    show_process_description("Lower Cont.")
+
 
 """
 Yüklenen fotoğrafın kotrastını artırır.
 """
+
+
 def raise_cont():
     global photoProc, labelProc
     matrix = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -113,10 +152,14 @@ def raise_cont():
             for k in range(matrix.shape[2]):
                 matrix[i, j, k] = min(255, matrix[i, j, k] * 2)
     show_processed_image(matrix)
+    show_process_description("Raise Cont.")
+
 
 """
 Yüklenen fotoğrafın kotrastını  non lineer olarak azaltır.
 """
+
+
 def non_linear_lower_cont():
     global photoProc, labelProc
     matrix = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -126,10 +169,14 @@ def non_linear_lower_cont():
             for k in range(matrix.shape[2]):
                 matrix[i, j, k] = min(255, (matrix[i, j, k] / 255.0) ** 0.33) * 255.0
     show_processed_image(matrix)
+    show_process_description("Non Linear\n Lower Cont.")
+
 
 """
 Yüklenen fotoğrafın kotrastını  non lineer olarak artırır.
 """
+
+
 def non_linear_raise_cont():
     global photoProc, labelProc
     matrix = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -139,6 +186,8 @@ def non_linear_raise_cont():
             for k in range(matrix.shape[2]):
                 matrix[i, j, k] = min(255, (matrix[i, j, k] / 255.0) ** 2) * 255.0
     show_processed_image(matrix)
+    show_process_description("Non Linear\n Raise Cont.")
+
 
 """
 Resim yükleme
@@ -146,16 +195,17 @@ Resim yükleme
 def load_image():
     global image
     try:
-        imagePath = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.gif")])
+        imagePath = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp")])
         if len(imagePath) != 0:
             image = cv2.imread(imagePath)
             image = cv2.resize(image, (300, 300))  # Yüklenen resmi 300x300 olacak şekilde resize et.
             lblPath.config(text=imagePath)
-            #print_image_pixel(image) Ödev-2
+            # print_image_pixel(image) Ödev-2
             show_image(image)
     except Exception as e:
         lblPath.config(text="Resim yükleme hatası!")
         print(f"Hata: {e}")
+
 
 """
 Component yerleşimeri
@@ -164,7 +214,7 @@ btnLoadImage = tk.Button(form, text="Resim Yükle", command=load_image)
 btnLoadImage.grid(row=0, column=0, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
 
 lblPath = tk.Label(form, text="-")
-lblPath.grid(row=1, column=0, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=8)
+lblPath.grid(row=1, column=0, padx=5, pady=5, sticky="w", rowspan=1, columnspan=8)
 
 btnInvert = tk.Button(form, text="Invert", command=invert)
 btnInvert.grid(row=0, column=1, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
@@ -186,5 +236,8 @@ btnNonLower.grid(row=0, column=6, padx=5, pady=5, sticky="nsew", rowspan=1, colu
 
 btnNonRaise = tk.Button(form, text="Non Linear\n Raise Cont.", command=non_linear_raise_cont)
 btnNonRaise.grid(row=0, column=7, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
+
+lblInfo = tk.Label(form, text="Seyit Ahmet ÖZDEMİR\n202285151045")
+lblInfo.grid(row=2, column=0, padx=5, pady=5, sticky="w", rowspan=1, columnspan=6)
 
 tk.mainloop()
