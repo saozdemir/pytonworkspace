@@ -14,12 +14,8 @@ from matplotlib import pyplot as plt
 
 form = tk.Tk()
 form.geometry("1024x600")
-form.title("Görüntü İşleme")
+form.title("Görüntü İşleme - Histogram")
 
-"""
-FileDialog ile resim seçimini alır
-Alınan resmi 300x300px formatına resize eder.
-"""
 photo = None
 label = None
 image = None
@@ -30,8 +26,6 @@ labelDesc = None
 """
 Yüklenen fotoğrafı gösterir
 """
-
-
 def show_image(image):
     global photo, label
     normalImage = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -43,8 +37,6 @@ def show_image(image):
 """
 Yapılan işlemi yazdırır.
 """
-
-
 def show_process_description(text):
     global labelDesc
     labelDesc = tk.Label(form, text=text)
@@ -96,7 +88,6 @@ def green_histogram():
     canvas = FigureCanvasTkAgg(fig, master=form)
     canvas.draw()
     canvas.get_tk_widget().grid(row=4, column=4, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
-    #canvas.get_tk_widget().grid(row=4, column=0, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=4)
 
 
 def blue_histogram():
@@ -120,10 +111,9 @@ def blue_histogram():
     canvas = FigureCanvasTkAgg(fig, master=form)
     canvas.draw()
     canvas.get_tk_widget().grid(row=4, column=4, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
-    #canvas.get_tk_widget().grid(row=4, column=0, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=4)
 
 
-def grey_scale_histogram():
+def gray_scale_histogram():
     global image
     # Önceki histogramı temizle
     plt.clf()
@@ -149,7 +139,8 @@ def grey_scale_histogram():
     canvas.get_tk_widget().grid(row=4, column=4, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
 
 """
-Resim yükleme
+FileDialog ile resim seçimini alır
+Alınan resmi 300x300px formatına resize eder.
 """
 def load_image():
     global image
@@ -179,7 +170,7 @@ btnGreenHist.grid(row=0, column=2, padx=5, pady=5, sticky="nsew", rowspan=1, col
 btnBlueHist = tk.Button(form, text="Blue Histogram", command=blue_histogram)
 btnBlueHist.grid(row=1, column=1, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
 
-btnGreyScaleHist = tk.Button(form, text="Gray Scale Histogram", command=grey_scale_histogram)
+btnGreyScaleHist = tk.Button(form, text="Gray Scale Histogram", command=gray_scale_histogram)
 btnGreyScaleHist.grid(row=1, column=2, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
 
 lblPath = tk.Label(form, text="-")
