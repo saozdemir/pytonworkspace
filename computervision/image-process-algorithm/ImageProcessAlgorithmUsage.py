@@ -62,8 +62,9 @@ def load_image():
         imagePath = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp")])
         if len(imagePath) != 0:
             image = cv2.imread(imagePath)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            image = cv2.resize(image, (50, 50))  # Yüklenen resmi 50x50 olacak şekilde resize et.
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            # image = cv2.resize(image, (50, 50))  # Yüklenen resmi 50x50 olacak şekilde resize et.
             # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             lblPath.config(text=imagePath)
             show_image(image)
@@ -112,6 +113,8 @@ def print_resized_pixel_index_to_excel(file_name, matrix_size, new_matrix_size, 
     size_ratio = float(matrix_size / new_matrix_size)
     matrix = [[f"({math.ceil(i * size_ratio)},{math.ceil(j * size_ratio)})" for j in range(new_matrix_size)] for i in
               range(new_matrix_size)]
+    # matrix = [[f"({round(i * size_ratio)},{round(j * size_ratio)})" for j in range(new_matrix_size)] for i in
+    #           range(new_matrix_size)]
     try:
         for i, row in enumerate(matrix):
             for j, element in enumerate(row):
@@ -138,10 +141,10 @@ def inter_nearest():
     resized = cv2.resize(image, (20, 20), interpolation=cv2.INTER_NEAREST)
     # resized = cv2.resize(image,None, fx=size_ratio, fy=size_ratio, interpolation=cv2.INTER_NEAREST)
     show_photo_proc(resized)
-    # matrix = [[f"({math.ceil(i * size_ratio)},{math.ceil(j * size_ratio)})" for j in range(NEW_MATRIX_SIZE)] for i in
-    #           range(NEW_MATRIX_SIZE)]
-    matrix = [[f"({round(i * size_ratio)},{round(j * size_ratio)})" for j in range(NEW_MATRIX_SIZE)] for i in
+    matrix = [[f"({math.ceil(i * size_ratio)},{math.ceil(j * size_ratio)})" for j in range(NEW_MATRIX_SIZE)] for i in
               range(NEW_MATRIX_SIZE)]
+    # matrix = [[f"({round(i * size_ratio)},{round(j * size_ratio)})" for j in range(NEW_MATRIX_SIZE)] for i in
+    #           range(NEW_MATRIX_SIZE)]
     print_resized_pixel_index_to_excel("inter_nearest_index", 50, 20, resized)
     print_pixels_to_excel("inter_nearest", 20, resized)
 
