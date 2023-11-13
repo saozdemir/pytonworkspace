@@ -5,11 +5,12 @@
  <p>
  @description:50x50 görüntüyü görüntü işleme algoritmaları ile 20x20 ölçeklerine dönüştürecekuygulama
  Algoritmalar:
-    1- INTER_NEAREST (En Yakın Komşu)
+    1-INTER_NEAREST (En Yakın Komşu)
     2-INTER_AREA (Alan)
     3-INTER_CUBIC (Kübik)
     4-INTER_LINEAR (Doğrusal)
 """
+import math
 import tkinter as tk
 import cv2
 from tkinter import filedialog
@@ -20,7 +21,7 @@ import pandas as pd
 import os
 
 form = tk.Tk()
-form.geometry("1024x600")
+form.geometry("600x400")
 form.title("Görüntü İşleme Algoritmaları")
 
 photo = None
@@ -30,28 +31,11 @@ resized = None
 photoProc = None
 labelProc = None
 labelDesc = None
+matrix = None
+MATRIX_SIZE = 50
+NEW_MATRIX_SIZE = 20
 
-
-def show_photo_proc(resized):
-    global photoProc, labelProc
-    photoProc = ImageTk.PhotoImage(image=Image.fromarray(resized))
-    labelProc = tk.Label(form, image=photoProc)
-    labelProc.grid(row=4, column=2, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=1)
-def inter_nearest():
-    global resized
-    resized = cv2.resize(image, (20, 20), interpolation=cv2.INTER_NEAREST)
-    show_photo_proc(resized)
-    print_to_excel("inter_nearest", 20, resized)
-
-def inter_area():
-    pass
-
-def inter_cubic():
-    pass
-
-def inter_linear():
-    pass
-
+"""Yüklenen fotoğrafı gösterir"""
 def show_image(image):
     global photo, label
     # normalImage = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -60,29 +44,18 @@ def show_image(image):
     label.grid(row=4, column=0, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=1)
 
 
-def print_to_excel(name, size, img):
-    # Matrisi oluştur
-    matrix = []
+"""
+İşlenmiş fotoğrafı gösterir.
+"""
+def show_photo_proc(resized):
+    global photoProc, labelProc
+    photoProc = ImageTk.PhotoImage(image=Image.fromarray(resized))
+    labelProc = tk.Label(form, image=photoProc)
+    labelProc.grid(row=4, column=2, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=1)
 
-    for i in range(size):
-        row = []
-        for j in range(size):
-            pixel = img[i, j]
-            row.append(pixel)
-        matrix.append(row)
-
-    # Veriyi bir DataFrame'e dönüştür
-    df = pd.DataFrame(matrix, columns=[f'Pixel_{i}' for i in range(size)])
-    df.index = [f'Pixel_{i}' for i in range(size)]
-
-    if os.path.exists(name + ".xlsx"):
-        os.remove(name + ".xlsx")
-
-    # DataFrame'i Excel'e dök
-    df.to_excel(name + ".xlsx", index=False)
-
-
-
+"""
+Dosya Yükleme
+"""
 def load_image():
     global image
     try:
@@ -93,10 +66,102 @@ def load_image():
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             lblPath.config(text=imagePath)
             show_image(image)
-            print_to_excel("normal", 50, image)
+
     except Exception as e:
         lblPath.config(text="Resim yükleme hatası!")
         print(f"Hata: {e}")
+    print_pixels_to_excel("normal", 50, image)
+
+"""
+Resmin piksellerinde bulunan RGB değerlerini bir matris olarka excel e aktarır.
+"""
+def print_pixels_to_excel(file_name, matrix_size, img):
+    try:
+        # Matrisi oluştur
+        matrix = []
+
+        for i in range(matrix_size):
+            row = []
+            for j in range(matrix_size):
+                pixel = img[i, j]
+                row.append(pixel)
+            matrix.append(row)
+
+        # Veriyi bir DataFrame'e dönüştür
+        df = pd.DataFrame(matrix, columns=[f'Pixel_{i}' for i in range(matrix_size)])
+        df.index = [f'Pixel_{i}' for i in range(matrix_size)]
+
+        if os.path.exists(file_name + ".xlsx"):
+            os.remove(file_name + ".xlsx")
+
+        # DataFrame'i Excel'e dök
+        df.to_excel(file_name + ".xlsx", index=False)
+        lblExcel.config(text=file_name + " excel dosyası oluştruldu.")
+    except Exception as e:
+        lblPath.config(text="Excel hatası!")
+        print(f"Hata: {e}")
+
+
+"""
+Yeniden boyutlandırma işleminde orjinal matristeki hangi piksel'in yeni matristeki değerine atanacağını
+bir excel dosyasında oluşturarak gösterir.
+"""
+def print_resized_pixel_index_to_excel(file_name, matrix_size, new_matrix_size, img):
+    global matrix
+    size_ratio = float(matrix_size / new_matrix_size)
+    matrix = [[f"({math.ceil(i * size_ratio)},{math.ceil(j * size_ratio)})" for j in range(new_matrix_size)] for i in
+              range(new_matrix_size)]
+    try:
+        for i, row in enumerate(matrix):
+            for j, element in enumerate(row):
+                print(f"[m({i},{j}): {element}],", end=" ")
+            print()
+            # Veriyi bir DataFrame'e dönüştür
+            df = pd.DataFrame(matrix, columns=[f'Pixel_{i}' for i in range(new_matrix_size)])
+            df.index = [f'Pixel_{i}' for i in range(new_matrix_size)]
+
+            if os.path.exists(file_name + ".xlsx"):
+                os.remove(file_name + ".xlsx")
+
+            # DataFrame'i Excel'e dök
+            df.to_excel(file_name + ".xlsx", index=False)
+            lblExcel.config(text=file_name + " excel dosyası oluştruldu.")
+    except Exception as e:
+        lblPath.config(text="Excel hatası!")
+        print(f"Hata: {e}")
+
+
+def inter_nearest():
+    global resized, matrix
+    size_ratio = float(MATRIX_SIZE / NEW_MATRIX_SIZE)
+    resized = cv2.resize(image, (20, 20), interpolation=cv2.INTER_NEAREST)
+    show_photo_proc(resized)
+    matrix = [[f"({math.ceil(i * size_ratio)},{math.ceil(j * size_ratio)})" for j in range(NEW_MATRIX_SIZE)] for i in
+              range(NEW_MATRIX_SIZE)]
+    print_resized_pixel_index_to_excel("inter_nearest_index", 50, 20, resized)
+    print_pixels_to_excel("inter_nearest", 20, resized)
+
+
+def inter_area():
+    global resized
+    resized = cv2.resize(image, (20, 20), interpolation=cv2.INTER_AREA)
+    show_photo_proc(resized)
+    print_pixels_to_excel("inter_area", 20, resized)
+
+
+def inter_cubic():
+    global resized
+    resized = cv2.resize(image, (20, 20), interpolation=cv2.INTER_CUBIC)
+    show_photo_proc(resized)
+    print_pixels_to_excel("inter_cubic", 20, resized)
+    print_resized_pixel_index_to_excel("inter_cubic_resized", 50, 20, resized)
+
+
+def inter_linear():
+    global resized
+    resized = cv2.resize(image, (20, 20), interpolation=cv2.INTER_LINEAR)
+    show_photo_proc(resized)
+    print_pixels_to_excel("inter_linear", 20, resized)
 
 """
 Component yerleşimeri
@@ -121,5 +186,8 @@ lblPath.grid(row=2, column=0, padx=5, pady=5, sticky="w", rowspan=1, columnspan=
 
 lblInfo = tk.Label(form, text="Seyit Ahmet ÖZDEMİR\n202285151045")
 lblInfo.grid(row=3, column=0, padx=5, pady=5, sticky="w", rowspan=1, columnspan=6)
+
+lblExcel = tk.Label(form, text="-")
+lblExcel.grid(row=5, column=0, padx=5, pady=5, sticky="w", rowspan=1, columnspan=6)
 
 tk.mainloop()
