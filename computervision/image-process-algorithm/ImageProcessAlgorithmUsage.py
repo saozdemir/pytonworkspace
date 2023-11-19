@@ -36,6 +36,8 @@ MATRIX_SIZE = 50
 NEW_MATRIX_SIZE = 20
 
 """Yüklenen fotoğrafı gösterir"""
+
+
 def show_image(image):
     global photo, label
     # normalImage = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -47,25 +49,29 @@ def show_image(image):
 """
 İşlenmiş fotoğrafı gösterir.
 """
+
+
 def show_photo_proc(resized):
     global photoProc, labelProc
     photoProc = ImageTk.PhotoImage(image=Image.fromarray(resized))
     labelProc = tk.Label(form, image=photoProc)
     labelProc.grid(row=4, column=2, padx=10, pady=10, sticky="nsew", rowspan=1, columnspan=1)
 
+
 """
 Dosya Yükleme
 """
+
+
 def load_image():
     global image
     try:
         imagePath = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp")])
         if len(imagePath) != 0:
             image = cv2.imread(imagePath)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            # image = cv2.resize(image, (50, 50))  # Yüklenen resmi 50x50 olacak şekilde resize et.
-            # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            # RGB2GRAY formatına değil de BGR2GRAY olursa matris satır ve sütun değerleri ters oluyor.
+            # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             lblPath.config(text=imagePath)
             show_image(image)
 
@@ -74,9 +80,12 @@ def load_image():
         print(f"Hata: {e}")
     print_pixels_to_excel("normal", 50, image)
 
+
 """
 Resmin piksellerinde bulunan RGB değerlerini bir matris olarka excel e aktarır.
 """
+
+
 def print_pixels_to_excel(file_name, matrix_size, img):
     try:
         # Matrisi oluştur
@@ -91,7 +100,6 @@ def print_pixels_to_excel(file_name, matrix_size, img):
 
         # Veriyi bir DataFrame'e dönüştür
         df = pd.DataFrame(matrix, columns=[f'Pixel_{i}' for i in range(matrix_size)])
-        df.index = [f'Pixel_{i}' for i in range(matrix_size)]
 
         if os.path.exists(file_name + ".xlsx"):
             os.remove(file_name + ".xlsx")
@@ -108,11 +116,11 @@ def print_pixels_to_excel(file_name, matrix_size, img):
 Yeniden boyutlandırma işleminde orjinal matristeki hangi piksel'in yeni matristeki değerine atanacağını
 bir excel dosyasında oluşturarak gösterir.
 """
-def print_resized_pixel_index_to_excel(file_name, matrix_size, new_matrix_size, img):
+
+
+def print_resized_pixel_index_to_excel(file_name, matrix_size, new_matrix_size, resized):
     global matrix
     size_ratio = float(matrix_size / new_matrix_size)
-    # matrix = [[f"({math.ceil(i * size_ratio)},{math.ceil(j * size_ratio)})" for j in range(new_matrix_size)] for i in
-    #           range(new_matrix_size)]
     matrix = [[f"({round(i * size_ratio)},{round(j * size_ratio)})" for i in range(new_matrix_size)] for j in
               range(new_matrix_size)]
     try:
@@ -122,7 +130,7 @@ def print_resized_pixel_index_to_excel(file_name, matrix_size, new_matrix_size, 
             print()
             # Veriyi bir DataFrame'e dönüştür
             df = pd.DataFrame(matrix, columns=[f'Pixel_{i}' for i in range(new_matrix_size)])
-            df.index = [f'Pixel_{i}' for i in range(new_matrix_size)]
+            df.index = [f'Pixel_{j}' for j in range(new_matrix_size)]
 
             if os.path.exists(file_name + ".xlsx"):
                 os.remove(file_name + ".xlsx")
@@ -139,10 +147,7 @@ def inter_nearest():
     global resized, matrix
     size_ratio = float(MATRIX_SIZE / NEW_MATRIX_SIZE)
     resized = cv2.resize(image, (20, 20), interpolation=cv2.INTER_NEAREST)
-    # resized = cv2.resize(image,None, fx=size_ratio, fy=size_ratio, interpolation=cv2.INTER_NEAREST)
     show_photo_proc(resized)
-    # matrix = [[f"({math.ceil(i * size_ratio)},{math.ceil(j * size_ratio)})" for j in range(NEW_MATRIX_SIZE)] for i in
-    #           range(NEW_MATRIX_SIZE)]
     matrix = [[f"({round(i * size_ratio)},{round(j * size_ratio)})" for i in range(NEW_MATRIX_SIZE)] for j in
               range(NEW_MATRIX_SIZE)]
     print_resized_pixel_index_to_excel("inter_nearest_index", 50, 20, resized)
@@ -169,6 +174,7 @@ def inter_linear():
     resized = cv2.resize(image, (20, 20), interpolation=cv2.INTER_LINEAR)
     show_photo_proc(resized)
     print_pixels_to_excel("inter_linear", 20, resized)
+
 
 """
 Component yerleşimeri
