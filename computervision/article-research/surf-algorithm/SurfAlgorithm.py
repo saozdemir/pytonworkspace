@@ -3,13 +3,16 @@
  @project pytonworkspace SurfAlgorithm
  @date 18 Ara 2023
  <p>
- @description:
+ @description: pip install opencv-contrib-python kütüphanesi gerekli
+ ORB SURF ile aynı
+ https://www.youtube.com/watch?v=fIpTks0G2m0&t=50s
 """
 import cv2
+import cv2 as cv
 
 # Resimleri oku
-image1 = cv2.imread('E:/PycharmProjects/pytonworkspace/computervision/article-research/edge-detection/original_image.png', cv2.IMREAD_GRAYSCALE)
-image2 = cv2.imread('E:/PycharmProjects/pytonworkspace/computervision/article-research/edge-detection/image2.png', cv2.IMREAD_GRAYSCALE)
+image1 = cv2.imread('C:/Users/xsaozdemir/PycharmProjects/pytonworkspace/computervision/article-research/surf-algorithm/original_image.png', cv2.IMREAD_GRAYSCALE)
+image2 = cv2.imread('C:/Users/xsaozdemir/PycharmProjects/pytonworkspace/computervision/article-research/surf-algorithm/image2.png', cv2.IMREAD_GRAYSCALE)
 
 # SURF detektörünü oluştur
 surf = cv2.xfeatures2d.SURF_create()
