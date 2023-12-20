@@ -1,5 +1,5 @@
 """
- @author saozd
+ @author Seyit Ahmet ÖZDEMİR
  @project pytonworkspace OrbAlgoritm
  @date 20 Ara 2023
  <p>

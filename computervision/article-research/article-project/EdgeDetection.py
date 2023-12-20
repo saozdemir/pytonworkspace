@@ -3,7 +3,7 @@
  @project pytonworkspace EdgeDetection
  @date 20 Ara 2023
  <p>
- @description:
+ @description: Sınır Tespit Algoritması uygulasması
 """
 import cv2
 import os
