@@ -12,7 +12,7 @@ def process_brain_mri(image_path):
     # Resmi oku
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
-    # Eşikleme işlemi ile gri madde ve beyaz madde ayrımı yap
+    # Eşikleme işlemi ile gri madde ve beyaz madde ayrımı yap (eşik değeri tanımlama)
     _, thresholded_gray_matter = cv2.threshold(image, 50, 255, cv2.THRESH_BINARY)#30
     _, thresholded_white_matter = cv2.threshold(image, 70, 255, cv2.THRESH_BINARY_INV)
 
@@ -36,7 +36,7 @@ def process_brain_mri(image_path):
     cv2.imshow('Edge Detection', edges)
     cv2.imshow('Gray Edge Detection', gray_edges)
     cv2.imshow('White Edge Detection', white_edges)
-    cv2.imshow('Combine Edge Detection', combined_edges)
+    # cv2.imshow('Combine Edge Detection', combined_edges)
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()

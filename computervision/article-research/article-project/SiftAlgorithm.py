@@ -1,3 +1,10 @@
+"""
+ @author saozd
+ @project pytonworkspace SiftAlgorithm
+ @date 20 Ara 2023
+ <p>
+ @description:Sift Algoritması ile görüntü eşleme ve kaydırma
+"""
 import cv2
 import os
 import numpy as np
@@ -5,7 +12,7 @@ import numpy as np
 resource_root = r'E:\PycharmProjects\pytonworkspace\computervision\article-research\resources'
 # Görüntüleri oku
 img1_path = os.path.join(resource_root, 'MGH10/MGH10/g1.png')
-img2_path = os.path.join(resource_root, 'MGH10/MGH10/g4.png')
+img2_path = os.path.join(resource_root, 'MGH10/MGH10/g2.png')
 
 img1 = cv2.imread(img1_path,0)  # referans görüntü
 img2 = cv2.imread(img2_path,0)  # hareketli görüntü

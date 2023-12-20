@@ -51,9 +51,9 @@ def sift_feature_matching_ransac(img1_path, img2_path):
 
 # Örnek kullanım
 if __name__ == "__main__":
-    img1_path = "C:/Users/xsaozdemir/PycharmProjects/pytonworkspace/computervision/article-research/surf-algorithm/original_image.png"
-    img2_path = "C:/Users/xsaozdemir/PycharmProjects/pytonworkspace/computervision/article-research/surf-algorithm/image2.png"
+    # img1_path = "C:/Users/xsaozdemir/PycharmProjects/pytonworkspace/computervision/article-research/surf-algorithm/original_image.png"
+    # img2_path = "C:/Users/xsaozdemir/PycharmProjects/pytonworkspace/computervision/article-research/surf-algorithm/image2.png"
 
-    # img1_path = "E:/PycharmProjects/pytonworkspace/computervision/article-research/sift-algorithm/sift-template/original_image.png"
-    # img2_path = "E:/PycharmProjects/pytonworkspace/computervision/article-research/sift-algorithm/sift-template/image2.png"
+    img1_path = "E:/PycharmProjects/pytonworkspace/computervision/article-research/sift-algorithm/sift-template/original_image.png"
+    img2_path = "E:/PycharmProjects/pytonworkspace/computervision/article-research/sift-algorithm/sift-template/image2.png"
     sift_feature_matching_ransac(img1_path, img2_path)
