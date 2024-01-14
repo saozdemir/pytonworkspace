@@ -1,7 +1,7 @@
 """
  @author Seyit Ahmet ÖZDEMİR
  @project pytonworkspace WineDataSetClassificationAlgorithm
- @date 14 Oca 2024
+ @date 11 Oca 2024
  <p>
  @description: sklearn Wine dataseti için K-NN, DecisionTree ve SVM
  algoritmalrının sınflandırma grafiklerini çizer.
