@@ -1,5 +1,5 @@
 """
- @author saozd
+ @author Seyit Ahmet ÖZDEMİR
  @project pytonworkspace Classifications
  @date 9 Oca 2024
  <p>

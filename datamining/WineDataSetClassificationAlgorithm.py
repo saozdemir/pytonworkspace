@@ -1,5 +1,5 @@
 """
- @author saozd
+ @author Seyit Ahmet ÖZDEMİR
  @project pytonworkspace wine
  @date 14 Oca 2024
  <p>

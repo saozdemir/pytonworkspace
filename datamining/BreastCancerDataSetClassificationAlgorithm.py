@@ -1,5 +1,5 @@
 """
- @author saozd
+ @author Seyit Ahmet ÖZDEMİR
  @project pytonworkspace BreastCancer
  @date 9 Oca 2024
  <p>
