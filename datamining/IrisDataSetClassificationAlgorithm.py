@@ -1,6 +1,6 @@
 """
  @author Seyit Ahmet ÖZDEMİR
- @project pytonworkspace Classifications
+ @project pytonworkspace IrisDataSetClassificationAlgorithm
  @date 9 Oca 2024
  <p>
  @description: sklearn Iris dataseti için K-NN, DecisionTree ve SVM

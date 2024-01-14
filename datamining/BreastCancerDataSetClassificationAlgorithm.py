@@ -1,6 +1,6 @@
 """
  @author Seyit Ahmet ÖZDEMİR
- @project pytonworkspace BreastCancer
+ @project pytonworkspace BreastCancerDataSetClassificationAlgorithm.py
  @date 9 Oca 2024
  <p>
  @description: sklearn Breast Cancer dataseti için K-NN, DecisionTree ve SVM
