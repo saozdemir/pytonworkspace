@@ -42,7 +42,7 @@ def traditional_gray_scale():
     # gray_image = ImageTk.PhotoImage(image=Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)))
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # Geleneksel eşikleme işlemi uygula
-    threshold_value = 127 # manuel girildi
+    threshold_value = 127 # manuel girildi>
     _, thresholded_image = cv2.threshold(gray_image, threshold_value, 255, cv2.THRESH_BINARY)
 
     gray_image_tk = ImageTk.PhotoImage(image=Image.fromarray(thresholded_image))
@@ -70,10 +70,10 @@ Component yerleşimeri
 btnLoadImage = tk.Button(form, text="Resim Yükle", command=load_image)
 btnLoadImage.grid(row=0, column=0, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
 
-btnGrayScale = tk.Button(form, text="Geleneksel Gri Tonlama", command=traditional_gray_scale)
+btnGrayScale = tk.Button(form, text="Geleneksel Gri Tonlama Threshold", command=traditional_gray_scale)
 btnGrayScale.grid(row=0, column=1, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
 
-btnLoadTemplate = tk.Button(form, text="Otsu Algoritması", command=otsu_thresholding)
+btnLoadTemplate = tk.Button(form, text="Otsu Algoritması Threshold", command=otsu_thresholding)
 btnLoadTemplate.grid(row=0, column=2, padx=5, pady=5, sticky="nsew", rowspan=1, columnspan=1)
 
 lblPath = tk.Label(form, text="-")
