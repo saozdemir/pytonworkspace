@@ -5,6 +5,8 @@
  <p>
  @description:
 """
-print("Code: \"xxx\" is successfully")
+# print("Code: \"xxx\" is successfully")
+#
+# print(len(input("len:")))
 
-print(len(input("len:")))
+print(int("123") + 4)
