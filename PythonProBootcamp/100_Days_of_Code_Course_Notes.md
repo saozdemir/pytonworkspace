@@ -13,14 +13,18 @@
 ```python
 print("Hello")
 number = input("Number:")
-print("Code: \"xxx\" is successfully")
+print("Code: \"xxx\" is successfully") # Code: "xxx" is successfully
 print("Hello" + " " + "world!")
+print("New Line: \\") # New Line: \
 ```
 
 * **`len()`:** Girilen string ifadenin size bilgisini döndürür.
 
 ```python
 print(len(input("len:")))
+greet = "Hello"
+print(greet[len(greet)-1]) # o
+print(greet[-2]) # l (negatif tersten yazdırmaya yarar)
 ```
 
 #### 2- Variables
@@ -51,6 +55,13 @@ print(type(y)) #<class 'str'>
 * **Big Integer** $\rightarrow$ `123_456_789`
 * **Float** $\rightarrow$ `3.14`
 * **Boolean** $\rightarrow$ `True`, `False`
+
+```python
+print(type("Hello")) # <class 'str'>
+print(type(12345)) # <class 'int'>
+print(type(12.345)) # <class 'float'>
+print(type(True)) # <class 'bool'
+```
 
 #### 2- Type Conversions & Functions
 
@@ -667,3 +678,4 @@ print(type(y)) #<class 'str'>
 ### Day 100: Portfolio Project - Final Review & Predicting the Future
 
 * **Main Project / Core Task:** *Final Developer Portfolio and Completion Milestone*
+

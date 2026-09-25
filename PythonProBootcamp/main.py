@@ -9,4 +9,5 @@ print("Code: \"xxx\" is successfully")
 #
 print(len(input("len:")))
 
-print(int("123") + 4)
+print(int( "123") + 4)
+
