@@ -73,15 +73,15 @@ print(type(True)) # <class 'bool'
 
 #### 3- Mathematical Operations
 
-| Operator | Code            | Result | Description      |
-|---------|-----------------|--------|------------------|
-| `+`     | `print(3 + 7)`  | 10     | toplama          |
-| `-`     | `print(9 - 5)`  | 4      | çıkarma          |
-| `*`     | `print(3 * 2)`  | 6      | çarpma           |
-| `/`     | `print(6 / 3)`  | 2.0    | bölme (float)    |
-| `**`    | `print(2 ** 3)` | 8      | $2^3$ üslü ifade |
-| `//`    | `print(6 // 3)` | 2      | bölme (int)      |
-| `%`     | `print(10 % 3)` | 1      | mod              |
+| Operator | Code            | Result | Description    |
+|----------|-----------------|--------|----------------|
+| `+`      | `print(3 + 7)`  | 10     | toplama        |
+| `-`      | `print(9 - 5)`  | 4      | çıkarma        |
+| `*`      | `print(3 * 2)`  | 6      | çarpma         |
+| `/`      | `print(6 / 3)`  | 2.0    | bölme (float)  |
+| `**`     | `print(2 ** 3)` | 8      | 2<sup>3</sup> üslü ifade |
+| `//`     | `print(6 // 3)` | 2      | bölme (int)    |
+| `%`      | `print(10 % 3)` | 1      | mod            |
 
 * İşlem önceliği(PEMDAS):
   
