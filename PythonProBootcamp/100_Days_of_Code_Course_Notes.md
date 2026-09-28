@@ -68,12 +68,72 @@ print(type(True)) # <class 'bool'
 * **`type(number)`:** `number` değişkeninin türünü döndürür.
 * **`str(number)`:** `number` değişkenini stringe dönüştürür.
 * **`float(123)`:** Tam sayıyı ondalıklı sayıya dönüştürür.
+* **`int("123")`**: "123" string değerini integer sayıya dönüştürür.
+* `bool(1)`: 1 değerini bool türüne dönüştürür.
 
----
+#### 3- Mathematical Operations
+
+| Operator | Code            | Result | Description      |
+|---------|-----------------|--------|------------------|
+| `+`     | `print(3 + 7)`  | 10     | toplama          |
+| `-`     | `print(9 - 5)`  | 4      | çıkarma          |
+| `*`     | `print(3 * 2)`  | 6      | çarpma           |
+| `/`     | `print(6 / 3)`  | 2.0    | bölme (float)    |
+| `**`    | `print(2 ** 3)` | 8      | $2^3$ üslü ifade |
+| `//`    | `print(6 // 3)` | 2      | bölme (int)      |
+| `%`     | `print(10 % 3)` | 1      | mod              |
+
+* İşlem önceliği(PEMDAS):
+  
+  * Parantez $\rightarrow$ () İlk önce
+  * Üs $\rightarrow$ ** Parantezden sonra
+  * Çarpma yada Bölme $\rightarrow$ * OR / Solda hangisi varsa önce o işlemi yapar.
+  * Toplama yada Çıkarma $\rightarrow$ + OR - En son işlem önceliğine sahip
+* **`round()`**: Sayı yuvarlamada kullanılır. Ondalık kısım 0-4 arasında ise alta, 5-9 arasında ise üste yuvarlar.
+  
+  ```python
+  round(10.123456) # 10
+  round(10.6789) # 11
+  round(10.6789, 2) # 10.68 Virgülden sonra basamak sayısı
+  ```
+
+#### 4- Assignment Operators
+
+* = atama
+* += topla ve ata
+* -= çıkar ve ata
+* *= çarp ve ata
+* /= böl ve ata
+
+#### 5- String
+
+f-string değişkenleri tip dönüşümü yapmadan kullanmaya yarıyor. Tüm tipler için geçerlidir.
+
+```python
+score=30
+print("Your score is: " + str(score)) # Your score is: 30
+print(f"Your score is: {score}") # Your score is: 30
+```
 
 ### Day 3: Control Flow and Logical Operators
 
-* **Main Project / Core Task:** *Treasure Island*
+#### 1- If/Else
+
+```python
+height = int(input("What is your height in cm? "))
+if height > 120:
+    print("You can ride.")
+else:
+    print("You can't ride.")
+######
+age = int(input("How old are you? "))
+if age <= 15:
+    print("You are too young.")
+elif age > 15 | age < 50:
+    print("Yes you can.")
+else:
+    print("Too old.")
+```
 
 ---
 
