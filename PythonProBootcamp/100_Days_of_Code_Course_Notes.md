@@ -16,6 +16,11 @@ number = input("Number:")
 print("Code: \"xxx\" is successfully") # Code: "xxx" is successfully
 print("Hello" + " " + "world!")
 print("New Line: \\") # New Line: \
+print('''
+Multi
+Line
+Code
+''')
 ```
 
 * **`len()`:** Girilen string ifadenin size bilgisini döndürür.
@@ -113,7 +118,10 @@ f-string değişkenleri tip dönüşümü yapmadan kullanmaya yarıyor. Tüm tip
 score=30
 print("Your score is: " + str(score)) # Your score is: 30
 print(f"Your score is: {score}") # Your score is: 30
+# Karakterleri düzenlemeye gerek kalmadan yazdırma
+print(r'''You've special characters like "\" ''') #You've special characters like "\" 
 ```
+---
 
 ### Day 3: Control Flow and Logical Operators
 
@@ -134,12 +142,37 @@ elif age > 15 | age < 50:
 else:
     print("Too old.")
 ```
+#### 2- Logical Operations
+* `and` : Her iki ifade de doğruysa `True` değerini döndürür.
+* `or`  : İfadelerden biri doğruysa `True` değerini döndürür.
+* `not` : Sonucu tersine çevirir.
+```python
+a=3
+b=2
+c=6
+if a > b and c > a:
+    print("...")
+
+if a > b or a > c:
+    print("...")
+
+if not a > b:
+    print("...")
+```
 
 ---
 
 ### Day 4: Randomisation and Python Lists
 
-* **Main Project / Core Task:** *Rock Paper Scissors*
+#### 1- Randomisation
+* Rastgele sayı üretmek için kullanılır. `random` kütüphanesi import edilerek kullanılır.
+
+```python
+import random
+print(random.randint(1, 10)) # 1>= output <=10
+print(random.random()) # 0.0 <= output < 1.0 aralığında sayı üretir
+print(random.uniform(1, 10)) # 1.0 <= output <=10.0
+```
 
 ---
 
