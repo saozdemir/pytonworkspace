@@ -173,12 +173,65 @@ print(random.randint(1, 10)) # 1>= output <=10
 print(random.random()) # 0.0 <= output < 1.0 aralığında sayı üretir
 print(random.uniform(1, 10)) # 1.0 <= output <=10.0
 ```
+* `shuffle()`: Diziyi rastgele karıştırmak için kullanılır.
 
+```python
+import random
+
+chars = ["A", "B", "C"]
+random.shuffle(chars) # Diziyi rastgele karıştır.
+print(chars) # ['C', 'A', 'B']
+```
+#### 2- Lists
+* Veri tutmak için kullanılır. (-) indeks sondan saymaya başlar.
+* Python da tüm veri türleri aynı listeye eklenebilir. Ancak tip belirtme ihtiyacı varsa: `numbers:list[int]` şeklinde tanımlama da yapılabilir.
+  * `append()`: Listenin sonuna ekle
+  * `pop(0)`: Girilen indeksdeki elemanı listeden çıkarır.
+  * `extend(new_list)`: Listenin sonuna yeni liste ekler.
+  * `remove(item)`: Listede `item` ögesi varsa listeden çıkarır.
+  * `insert(i, item)`: `i` indeksine `item` ögesini ekler.
+  * `clear()`: Listeyi temizler
+  * `count(item)`: Listede `item` ögesinin kaç tane bulunduğunu sayar.
+  * `copy()`: Listeyi başka listeye kopyalar. `items2 = items.copy() `
+```python
+fruits = ["Cherry", "Apple", "Pear"]
+print(fruits[0]) # Cherry 
+fruits.append("Banana") # Listenin sonuna ekleme için
+print(fruits) # ['Cherry', 'Apple', 'Pear', 'Banana']
+len(fruits) # Size bilgisini döndürür.
+```
+* __NOT__: Listeden rastgele eleman seçimi için `random.choice(fruits)` fonksiyonu kullanılabilir.
+* __İç İçe Listeler__
+  * Birden fazla liste iç içe yazılabilir. Alt listelere yeni eleman eklendiğinde üst listede de bu görünür.
+```python
+fruits = ["Apple", "Banana", "Orange", "Peach"]
+vegetables = ["Tomatoes", "Potatoes", "Onion"]
+foods = [fruits, vegetables]
+# İç içe liste şeklide çıktı oluşturur.
+print(foods) # [['Apple', 'Banana', 'Orange', 'Peach'], ['Tomatoes', 'Potatoes', 'Onion']]
+```
+* __NOT__: İç içe listelerde bir üst listeden alt liste elemanına ulaşmak için `foods[1][2]` gibi yapı kullanılabilir. Bu durumda 1. indexte bulunan dizinin 3. indeksindeki eleman yani 'Onion' dönmüş olur.
+* __NOT__: Dizilerde toplam, maksimum ve minimum değer bulmak için kısayol olarak:
+  * `sum(scores)`: Tüm listenin toplam değerini döndürür.
+  * `max(scores)`: Listedeki maksimum değeri bulur.
+  * `min(scores)`: Listedeki minimum değeri bulur.
 ---
 
 ### Day 5: Python Loops
+#### 1- For Loop
+```python
+fruits = ["Apple", "Peach", "Pear"]
+for fruit in fruits:
+    print(fruit)
 
-* **Main Project / Core Task:** *Password Generator*
+for index in range(len(fruits)): 
+    print(fruits[index])
+```
+* `range(a, b, i)`: fonksiyonu döngülerde belirli bir aralıkta ve belirli bir artış miktarından kontrol için kullanılır.
+```python
+for number in range(1, 10, 1): #1 ile 10 arasında artış miktarı 1 olacak şekilde döngüyü kontol et.
+    print(number)
+```
 
 ---
 
