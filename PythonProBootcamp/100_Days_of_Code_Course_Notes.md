@@ -96,11 +96,11 @@ print(type(True)) # <class 'bool'
   * Toplama yada Çıkarma $\rightarrow$ + OR - En son işlem önceliğine sahip
 * **`round()`**: Sayı yuvarlamada kullanılır. Ondalık kısım 0-4 arasında ise alta, 5-9 arasında ise üste yuvarlar.
   
-  ```python
-  round(10.123456) # 10
-  round(10.6789) # 11
-  round(10.6789, 2) # 10.68 Virgülden sonra basamak sayısı
-  ```
+```python
+round(10.123456) # 10
+round(10.6789) # 11
+round(10.6789, 2) # 10.68 Virgülden sonra basamak sayısı
+```
 
 #### 4- Assignment Operators
 
@@ -233,12 +233,25 @@ for number in range(1, 10, 1): #1 ile 10 arasında artış miktarı 1 olacak şe
     print(number)
 ```
 
+#### 2- While Loop
+```python
+counter = 0
+while counter < 5:
+    print(counter) 
+    counter += 1
+```
 ---
 
 ### Day 6: Python Functions & Karel
+#### 1- Functions
+* Fonksiyonlar, belirli bir görevi yerine getiren kod bloklarıdır.
+* `def function_name(parameters):` şeklinde tanımlanır.
+```python
+def my_function(name):
+    print(f"Hello {name}!")
 
-* **Main Project / Core Task:** *Escaping the Maze*
-
+my_function("Ahmet") # Hello Ahmet!
+```
 ---
 
 ### Day 7: Hangman
